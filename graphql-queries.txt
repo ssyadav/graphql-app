@@ -1,0 +1,64 @@
+
+query CustomerById($id: ID! = 1) {
+  c1: customerById(id: $id) {
+     ... CustomerDetails
+  }
+}
+
+
+
+query CustomerByAgeInput(
+  $kids: AgeRangeFilter!
+  $adults: AgeRangeFilter!
+  $sr: AgeRangeFilter!
+  $includesKids: Boolean! = false
+  $includesAdults: Boolean! = false
+  $includesSr: Boolean! = false
+  
+) {
+  kids: customerByAgeInput(filter: $kids) @include(if : $includesKids)
+  {
+     ... CustomerDetails
+  }
+   adults: customerByAgeInput(filter: $adults) @include(if : $includesAdults)
+  {
+     ... CustomerDetails
+  }
+  
+  sr: customerByAgeInput(filter: $sr) @include(if : $includesSr)
+  {
+     ... CustomerDetails
+  }
+}
+
+
+
+
+fragment:
+
+fragment CustomerDetails on Customer {
+    id,
+    name,
+  	age
+}
+
+
+Varianbles:
+{
+  "includesSr": false,
+  "includesKids": false,
+  "includesAdults": true,
+  "kids": {
+    "minAge": 0,
+    "maxAge": 29
+  },
+  "adults": {
+    "minAge": 29,
+    "maxAge": 50
+  },
+  "sr": {
+    "minAge": 51,
+    "maxAge": 100
+  }
+}
+

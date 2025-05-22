@@ -1,0 +1,34 @@
+
+type Query {
+    search: [Result]
+}
+
+union Result = Fruit | Electronics | Book
+
+interface Product {
+    id: ID!
+    description: String
+    price: Int
+}
+
+type Fruit {
+    description: String
+    expiryDate: String
+}
+
+type Electronics {
+    id: ID!
+    description: String
+    price: Int
+    brand: Brand
+}
+
+enum Brand {
+    APPLE
+    SAMSUNG
+}
+
+type Book {
+    title: String
+    author: String
+}
